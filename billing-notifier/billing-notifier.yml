@@ -1,0 +1,17 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: billing-notifier
+spec:
+  schedule: "0 0 10,20,30 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: billing-notifier
+              image: reireias/billing-notifier:arm-0.0.1
+              envFrom:
+                - configMapRef:
+                    name: billing-notifier
+          restartPolicy: Never
