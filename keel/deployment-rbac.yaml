@@ -141,7 +141,7 @@ spec:
       containers:
         - name: keel
           # Note that we use appVersion to get images tag.
-          image: "reireias/keel-arm:0.16.0"
+          image: "reireias/keel-arm:0.16.1"
           # image: "keelhq/keel-arm:test-1"
           imagePullPolicy: Always
           command: ["/bin/keel"]
