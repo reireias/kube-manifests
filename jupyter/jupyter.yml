@@ -17,6 +17,27 @@ spec:
           image: reireias/jupyterlab:0.0.1
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: opt
+              mountPath: /opt
+      volumes:
+        - name: opt
+          persistentVolumeClaim:
+            claimName: jupyter-pvc
+          terminationGracePeriodSeconds: 0
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jupyter-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: slow
 ---
 apiVersion: v1
 kind: Service
