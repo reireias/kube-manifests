@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: jupyter
-          image: reireias/jupyterlab:0.0.2
+          image: reireias/jupyterlab:0.0.3
           ports:
             - containerPort: 8080
           volumeMounts:
