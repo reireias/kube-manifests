@@ -8,6 +8,8 @@ spec:
     spec:
       template:
         spec:
+          imagePullSecrets:
+            - name: ghcr
           containers:
             - name: gather
               image: ghcr.io/reireias/gather:latest
