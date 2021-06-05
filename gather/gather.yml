@@ -19,9 +19,9 @@ spec:
               volumeMounts:
                 - name: cache
                   mountPath: /app/.cache
-                - mountPath: /app/config.yml
+                - name: config
+                  mountPath: /app
                   readOnly: true
-                  name: config
           volumes:
             - name: cache
               persistentVolumeClaim:
