@@ -37,6 +37,9 @@ spec:
     requests:
       storage: 5Gi
   storageClassName: slow
+  selector:
+    matchLabels:
+      name: pv01
 ---
 apiVersion: v1
 kind: Service
