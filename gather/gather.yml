@@ -1,0 +1,49 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: gather
+spec:
+  schedule: "0 3,9,15,21 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: gather
+              image: ghcr.io/reireias/gather:latest
+              envFrom:
+                - configMapRef:
+                    name: gather
+              volumeMounts:
+                - name: cache
+                  mountPath: /app/.cache
+                - mountPath: /app/config.yml
+                  readOnly: true
+                  name: config
+          volumes:
+            - name: cache
+              persistentVolumeClaim:
+                claimName: gather-pvc
+            - name: config
+              configMap:
+                name: gather-config
+                items:
+                  - key: CONFIG
+                    path: config.yml
+          restartPolicy: Never
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gather-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: slow
+  selector:
+    matchLabels:
+      name: pv02
