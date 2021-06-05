@@ -20,7 +20,7 @@ spec:
                 - name: cache
                   mountPath: /app/.cache
                 - name: config
-                  mountPath: /app
+                  mountPath: /etc/config
                   readOnly: true
           volumes:
             - name: cache
