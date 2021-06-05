@@ -13,6 +13,9 @@ spec:
           containers:
             - name: gather
               image: ghcr.io/reireias/gather:latest
+              env:
+                - name: GATHER_CONFIG
+                  value: /etc/config/config.yml
               envFrom:
                 - configMapRef:
                     name: gather
