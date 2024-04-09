@@ -1,41 +1,41 @@
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: gather
-spec:
-  schedule: "0 3,9,15,21 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          imagePullSecrets:
-            - name: ghcr
-          containers:
-            - name: gather
-              image: ghcr.io/reireias/gather:latest
-              env:
-                - name: GATHER_CONFIG
-                  value: /etc/config/config.yml
-              envFrom:
-                - configMapRef:
-                    name: gather
-              volumeMounts:
-                - name: cache
-                  mountPath: /app/.cache
-                - name: config
-                  mountPath: /etc/config
-                  readOnly: true
-          volumes:
-            - name: cache
-              persistentVolumeClaim:
-                claimName: gather-pvc
-            - name: config
-              configMap:
-                name: gather-config
-                items:
-                  - key: CONFIG
-                    path: config.yml
-          restartPolicy: Never
+# apiVersion: batch/v1beta1
+# kind: CronJob
+# metadata:
+#   name: gather
+# spec:
+#   schedule: "0 3,9,15,21 * * *"
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           imagePullSecrets:
+#             - name: ghcr
+#           containers:
+#             - name: gather
+#               image: ghcr.io/reireias/gather:latest
+#               env:
+#                 - name: GATHER_CONFIG
+#                   value: /etc/config/config.yml
+#               envFrom:
+#                 - configMapRef:
+#                     name: gather
+#               volumeMounts:
+#                 - name: cache
+#                   mountPath: /app/.cache
+#                 - name: config
+#                   mountPath: /etc/config
+#                   readOnly: true
+#           volumes:
+#             - name: cache
+#               persistentVolumeClaim:
+#                 claimName: gather-pvc
+#             - name: config
+#               configMap:
+#                 name: gather-config
+#                 items:
+#                   - key: CONFIG
+#                     path: config.yml
+#           restartPolicy: Never
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
